@@ -1,18 +1,10 @@
-﻿using FluentNHibernate.Cfg;
-using NHibernate.Bytecode;
+﻿using NHibernate.Bytecode;
 using NHibernate.Cfg;
 using NHibernate.Context;
 using NHibernate.Dialect;
 using NHibernate.Driver;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace NHibernate.Core
 {
@@ -51,7 +43,7 @@ namespace NHibernate.Core
                 throw new Exception("Unable to parse config.json, fix file or provide connection string.", ex);
             }
         }
-        protected static Configuration GetConfiguration<TDialect, TDriver>(Action<Configuration>? code = null, string? connectionString = null)
+        protected static Configuration GetConfiguration<TDialect, TDriver>(Action<Configuration>? code = null, string? connectionString = null, bool runExtraConfig = true)
             where TDialect : Dialect.Dialect
             where TDriver : IDriver
         {
@@ -67,7 +59,7 @@ namespace NHibernate.Core
                 {
                     x.ConnectionString = _configuredConnectionString ?? connectionString;
                     x.Dialect<TDialect>();//MySQL55Dialect
-                    x.Driver<TDriver>();//MySqlDataDriver
+                    x.Driver<TDriver>();//MySqlDataDriver                    
                 });
                 cfg.Proxy(p => p.ProxyFactoryFactory<StaticProxyFactoryFactory>());
                 //cfg.SetProperty(NhEnvironment.DefaultSchema, NHibernateConfig.DefaultSchema ?? "TRPDTA160");
@@ -80,7 +72,8 @@ namespace NHibernate.Core
 
                 cfg.Properties["current_session_context_class"] = sessionContext;
                 cfg.Properties["show_sql"] = "true";
-                code?.Invoke(cfg);
+                if (runExtraConfig)
+                    code?.Invoke(cfg);
                 return cfg;
 
             }
@@ -156,8 +149,5 @@ namespace NHibernate.Core
         }
     }
 
-    public class NHibernateSessionManager : NHibernateSessionManagerBase
-    {
-
-    }
+    public class NHibernateSessionManager : NHibernateSessionManagerBase { }
 }
