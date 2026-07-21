@@ -61,9 +61,10 @@ namespace NHibernate.Core
         /// <param name="code">An optional action to apply additional configuration to the NHibernate Configuration instance.</param>
         /// <param name="connectionString">An optional connection string for database access.</param>
         /// <param name="runExtraConfig">Indicates whether to execute the additional configuration action.</param>
+        /// <param name="showSql">true if you want the generated sql queries output to the console, default is false.</param>
         /// <returns>A configured NHibernate Configuration instance.</returns>
         /// <exception cref="Exception">Thrown when initialization fails due to a missing connection string.</exception>
-        protected static Configuration GetConfiguration<TDialect, TDriver>(Action<Configuration>? code = null, string? connectionString = null, bool runExtraConfig = true)
+        protected static Configuration GetConfiguration<TDialect, TDriver>(Action<Configuration>? code = null, string? connectionString = null, bool runExtraConfig = true, bool showSql = false)
             where TDialect : Dialect.Dialect
             where TDriver : IDriver
         {
@@ -83,7 +84,8 @@ namespace NHibernate.Core
                 });
                 cfg.Proxy(p => p.ProxyFactoryFactory<StaticProxyFactoryFactory>());
                 cfg.Properties["current_session_context_class"] = sessionContext;
-                cfg.Properties["show_sql"] = "true";
+                if (showSql)
+                    cfg.Properties["show_sql"] = "true";
                 if (runExtraConfig)
                     code?.Invoke(cfg);
                 return cfg;
