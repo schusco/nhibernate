@@ -3,7 +3,30 @@ using NHibernate.Cfg;
 using NHibernate.Core.Fluent;
 using NHibernate.Test;
 
-var factory = ConfigureMySql();
+ISessionFactory factory;
+if (args.Length == 0)
+    factory = ConfigureMySql();
+else
+{
+    switch (args[0].ToLower())
+    {
+        case "mysql":
+            factory = ConfigureMySql();
+            break;
+        case "postgres":
+            factory = ConfigurePostGres();
+            break;
+        case "sqlserver":
+            factory = ConfigureSqlServer();
+            break;
+        case "sqlite":
+            factory = ConfigureSqlLite();
+            break;
+        default:
+            Console.WriteLine($"Unknown database type: {args[0]}");
+            return;
+    }
+}
 var dbSession = factory.OpenSession();
 Console.WriteLine("Setting Initial data in baseball_test table:");
 SeedData(dbSession);
@@ -78,11 +101,9 @@ void SeedData(ISession session)
 }
 void DeleteData(ISession session)
 {
-    using (var trx = session.BeginTransaction())
-    {
-        var test = session.QueryOver<BaseballTest>().List();
-        foreach (var team in test)
-            session.Delete(team);
-        trx.Commit();
-    }
+    using var trx = session.BeginTransaction();
+    var test = session.QueryOver<BaseballTest>().List();
+    foreach (var team in test)
+        session.Delete(team);
+    trx.Commit();
 }
