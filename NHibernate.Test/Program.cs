@@ -1,6 +1,5 @@
 ﻿using NHibernate;
-using NHibernate.Cfg;
-using NHibernate.Core.Fluent;
+using NHibernate.Core.Attributes;
 using NHibernate.Test;
 
 ISessionFactory factory;
@@ -71,25 +70,25 @@ Console.ReadKey();
 
 ISessionFactory ConfigureMySql()
 {
-    return NHibernateSessionManager.ConfigureFluently(typeof(Program).Assembly, connectionString: "Server=localhost;Database=my_first_app_development;Username=pi;Password=test;");
+    return NHibernateSessionManager.ConfigureWithAttributes(typeof(Program).Assembly, connectionString: "Server=localhost;Database=my_first_app_development;Username=pi;Password=test;");
 }
 ISessionFactory ConfigurePostGres()
 {
-    return NHibernateSessionManager.ConfigureFluentlyPostgres(typeof(Program).Assembly, connectionString: "Host=192.168.1.88;Port=5432;Database=test;Username=test;Password=test");
+    return NHibernateSessionManager.ConfigureWithAttributesPostgres(typeof(Program).Assembly, connectionString: "Host=192.168.1.88;Port=5432;Database=test;Username=test;Password=test");
 }
 ISessionFactory ConfigureSqlServer()
 {
     var connectionString = "Data Source=localhost;Persist Security Info=False;User ID=schusco;Password=test;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"NHibernate.Test\";Command Timeout=0";
-    return NHibernateSessionManager.ConfigureFluentlySqlServer(typeof(Program).Assembly, cfg => cfg.SetProperty("default_schema", "electrons.dbo"), connectionString);
+    return NHibernateSessionManager.ConfigureWithAttributesSqlServer(typeof(Program).Assembly, connectionString: connectionString);
 }
 ISessionFactory ConfigureSqlLite()
 {
-    return NHibernateSessionManager.ConfigureFluentlySQLite(typeof(Program).Assembly, SqlLiteConfig, "Data Source=test.db;Version=3;");
+    return NHibernateSessionManager.ConfigureWithAttributesSQLite(typeof(Program).Assembly, connectionString: "Data Source=test.db;Version=3;");
 }
-void SqlLiteConfig(Configuration cfg)
-{
-    new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Create(false, true);
-}
+//void SqlLiteConfig(Configuration cfg)
+//{
+//    new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Create(false, true);
+//}
 void SeedData(ISession session)
 {
     var test1 = new BaseballTest { Team = "Electrons", Wins = 15 };
