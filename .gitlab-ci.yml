@@ -19,4 +19,4 @@ publish_core:
   script:
     - dotnet restore
     - dotnet pack -c Release --no-restore -o ./artifacts
-    - dotnet nuget push "./artifacts/*.nupkg" --source GitLabNHibernate --skip-duplicate
+    - dotnet nuget push "./artifacts/*.nupkg" --source "GitLabNHibernate" --api-key "gitlab-ci-token" --skip-duplicate
