@@ -45,14 +45,15 @@ namespace NHibernate.Core.Attributes
         {
             SessionFactory = GetAttributeMappingConfig<MySQL55Dialect, MySqlDataDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
-        } /// <summary>
-          /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-          /// assembly.
-          /// </summary>
-          /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
-          /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
-          /// <param name="connectionString">An optional database connection string.</param>
-          /// <returns>An initialized ISessionFactory instance.</returns>
+        } 
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
+        /// assembly.
+        /// </summary>
+        /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
         public static ISessionFactory ConfigureWithAttributesPostgres(Assembly mappingAssembly, Action<Configuration>? cfg = null, string? connectionString = null)
         {
             SessionFactory = GetAttributeMappingConfig<PostgreSQLDialect, NpgsqlDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
@@ -83,22 +84,6 @@ namespace NHibernate.Core.Attributes
         {
             SessionFactory = GetAttributeMappingConfig<SQLiteDialect, SQLite20Driver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
-        }
-        /// <summary>
-        /// Configures and builds an NHibernate session factory using Fluent NHibernate with the specified dialect,
-        /// driver, and mapping assembly.
-        /// </summary>
-        /// <typeparam name="TDialect">The database dialect to use for the session factory.</typeparam>
-        /// <typeparam name="TDriver">The database driver to use for the session factory.</typeparam>
-        /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
-        /// <param name="cfg">An optional delegate to configure additional NHibernate settings.</param>
-        /// <param name="connectionString">An optional database connection string.</param>
-        /// <returns>An initialized instance of ISessionFactory.</returns>
-        public static ISessionFactory ConfigureFluently<TDialect, TDriver>(Assembly mappingAssembly, Action<Configuration>? cfg = null, string? connectionString = null)
-            where TDialect : Dialect.Dialect where TDriver : IDriver
-        {
-            SessionFactory = GetAttributeMappingConfig<TDialect, TDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
-            return SessionFactory;
-        }
+        }        
     }
 }

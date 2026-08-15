@@ -10,7 +10,12 @@
     <Authors>NHibernate Team</Authors>
     <Company>Electrons Baseball</Company>
     <Description>NHibernate.Core is a .NET library that provides a simple way for developers to perform the most difficult part of working with NHibernate, configuring the ISessionFactory instance.  It also provides projection classes for the most common data manipulations.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>  
 
   <ItemGroup>
     <PackageReference Include="NHibernate" Version="5.7.0" />

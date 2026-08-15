@@ -10,8 +10,13 @@
     <Authors>NHibernate Team</Authors>
     <Company>Electrons Baseball</Company>
     <Description>NHibernate.Core.Attributes is an extension to NHibernate.Core which provides methods to configure the ISessionFactory instance using attribute mapping.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="NHibernate" Version="5.7.0" />
     <PackageReference Include="NHibernate.Mapping.Attributes" Version="5.1.0" />

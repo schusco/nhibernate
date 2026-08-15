@@ -4,6 +4,7 @@ using NHibernate.Context;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text.Json;
 
 namespace NHibernate.Core
@@ -105,6 +106,42 @@ namespace NHibernate.Core
         public static ISessionFactory Configure(Action<Configuration>? code = null, string? connectionString = null)
         {
             SessionFactory = GetConfiguration<MySQL55Dialect, MySqlDataDriver>(code, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
+        /// assembly.
+        /// </summary>        
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
+        public static ISessionFactory ConfigurePostgres(Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetConfiguration<PostgreSQLDialect, NpgsqlDriver>(cfg, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for a SQL Server database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
+        /// assembly.
+        /// </summary>        
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
+        public static ISessionFactory ConfigureSqlServer(Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetConfiguration<MsSql2012Dialect, MicrosoftDataSqlClientDriver>(cfg, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for a SQLLite database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
+        /// assembly.
+        /// </summary>        
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
+        public static ISessionFactory ConfigureSQLite(Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetConfiguration<SQLiteDialect, SQLite20Driver>(cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
         }
         /// <summary>
