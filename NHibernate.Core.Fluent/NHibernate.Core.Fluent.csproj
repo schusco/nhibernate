@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageId>NHibernate.Core.Fluent</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>NHibernate Team</Authors>
     <Company>Electrons Baseball</Company>
     <Description>NHibernate.Core.Fluent is an extension to NHibernate.Core which provides methods to configure the ISessionFactory instance using Fluent NHibernate mapping.</Description>
