@@ -23,8 +23,7 @@ namespace NHibernate.Core.Fluent
             return fluentConfig;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory using Fluent NHibernate with the specified mapping.  Defaults to MySQL dialect and driver.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory using Fluent NHibernate with the specified mapping assembly.  Defaults to MySQL dialect and driver. 
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -36,8 +35,7 @@ namespace NHibernate.Core.Fluent
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping assembly.  
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -49,8 +47,7 @@ namespace NHibernate.Core.Fluent
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a SQL Server database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory for a SQL Server database connection using Fluent NHibernate with the specified mapping assembly.        
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -61,11 +58,19 @@ namespace NHibernate.Core.Fluent
             SessionFactory = GetFluentConfiguration<MsSql2012Dialect, MicrosoftDataSqlClientDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
         }
-        //public static ISessionFactory ConfigureFluentlyOracle(Assembly mappingAssembly, Action<Configuration>? cfg = null, string? connectionString = null)
-        //{
-        //    SessionFactory = GetFluentConfiguration<Oracle10gDialect, OracleManagedDataClientDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
-        //    return SessionFactory;
-        //}
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for an Oracle database connection using Fluent NHibernate with the specified mapping assembly.
+        /// driver, and mapping assembly.
+        /// </summary>        
+        /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
+        /// <param name="cfg">An optional delegate to configure additional NHibernate settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized instance of ISessionFactory.</returns>
+        public static ISessionFactory ConfigureFluentlyOracle(Assembly mappingAssembly, Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetFluentConfiguration<Oracle10gDialect, OracleManagedDataClientDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
 
         /// <summary>
         /// Configures and builds an NHibernate session factory for a SQLLite database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
@@ -95,6 +100,6 @@ namespace NHibernate.Core.Fluent
         {
             SessionFactory = GetFluentConfiguration<TDialect, TDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
-        }
+        }        
     }
 }

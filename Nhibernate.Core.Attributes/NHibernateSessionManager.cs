@@ -45,10 +45,9 @@ namespace NHibernate.Core.Attributes
         {
             SessionFactory = GetAttributeMappingConfig<MySQL55Dialect, MySqlDataDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
-        } 
+        }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and returns an ISessionFactory for a PostGres SQL database using attribute-based mappings from the specified assembly. 
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -60,8 +59,7 @@ namespace NHibernate.Core.Attributes
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a SQL Server database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and returns an ISessionFactory for a SQL Server database using attribute-based mappings from the specified assembly. 
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -73,8 +71,7 @@ namespace NHibernate.Core.Attributes
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a SQLLite database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and returns an ISessionFactory for a SQLLite database using attribute-based mappings from the specified assembly. 
         /// </summary>
         /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
@@ -84,6 +81,19 @@ namespace NHibernate.Core.Attributes
         {
             SessionFactory = GetAttributeMappingConfig<SQLiteDialect, SQLite20Driver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
             return SessionFactory;
-        }        
+        }
+        /// <summary>
+        /// Configures and returns an ISessionFactory for a Oracle database using attribute-based mappings from the specified assembly. 
+        /// The mapping definitions are expected to be in the provided assembly.
+        /// </summary>
+        /// <param name="mappingAssembly">The assembly containing NHibernate mapping definitions.</param>
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
+        public static ISessionFactory ConfigureWithAttributesOracle(Assembly mappingAssembly, Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetAttributeMappingConfig<Oracle12cDialect, OracleManagedDataClientDriver>(mappingAssembly, cfg, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
     }
 }

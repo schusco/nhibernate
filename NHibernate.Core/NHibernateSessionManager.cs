@@ -27,7 +27,6 @@ namespace NHibernate.Core
         /// Represents the configured connection string for database access.
         /// </summary>
         protected static string? ConfiguredConnectionString { get; set; }
-
         /// <summary>
         /// Constructor creates the ISessionFactory implementation.
         /// Executes the first time the helper class is called.
@@ -98,7 +97,7 @@ namespace NHibernate.Core
             }
         }
         /// <summary>
-        /// Configures and builds an ISessionFactory instance for NHibernate using the specified options.  Uses MySQL dialect and driver by default.
+        /// Configures and builds an ISessionFactory instance for NHibernate using the specified options.  Uses MySQL dialect and driver by default.  The mapping definitions are expected to be in the provided assembly.
         /// </summary>
         /// <param name="code">An optional action to customize the NHibernate configuration.</param>
         /// <param name="connectionString">An optional database connection string.</param>
@@ -109,8 +108,7 @@ namespace NHibernate.Core
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a PostGresSql database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory for a PostGresSql database connection.  The mapping definitions are expected to be in the provided assembly.
         /// </summary>        
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
         /// <param name="connectionString">An optional database connection string.</param>
@@ -121,8 +119,7 @@ namespace NHibernate.Core
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a SQL Server database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory for a SQL Server database connection.  The mapping definitions are expected to be in the provided assembly.
         /// </summary>        
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
         /// <param name="connectionString">An optional database connection string.</param>
@@ -133,8 +130,18 @@ namespace NHibernate.Core
             return SessionFactory;
         }
         /// <summary>
-        /// Configures and builds an NHibernate session factory for a SQLLite database connection using Fluent NHibernate with the specified mapping.  The mapping definitions are expected to be in the provided
-        /// assembly.
+        /// Configures and builds an NHibernate session factory for an Oracle database connection.  The mapping definitions are expected to be in the provided assembly.
+        /// </summary>        
+        /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
+        /// <param name="connectionString">An optional database connection string.</param>
+        /// <returns>An initialized ISessionFactory instance.</returns>
+        public static ISessionFactory ConfigureOracle(Action<Configuration>? cfg = null, string? connectionString = null)
+        {
+            SessionFactory = GetConfiguration<Oracle12cDialect, OracleManagedDataClientDriver>(cfg, connectionString).BuildSessionFactory();
+            return SessionFactory;
+        }
+        /// <summary>
+        /// Configures and builds an NHibernate session factory for a SQLLite database connection.  The mapping definitions are expected to be in the provided assembly.
         /// </summary>        
         /// <param name="cfg">An optional delegate to apply additional configuration settings.</param>
         /// <param name="connectionString">An optional database connection string.</param>
